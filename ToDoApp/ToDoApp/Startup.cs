@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using ToDoApp.Models;
+using Microsoft.Extensions.Configuration;
 
 namespace ToDoApp
 {
@@ -15,8 +13,17 @@ namespace ToDoApp
     {
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
+        public IConfiguration Configuration { get; private set; }
+        public Startup(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
+
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<ApplicationDbContext>(options =>
+                        options.UseSqlServer(Configuration.GetConnectionString("Development")));
+
             // Add framework services. !!important to use mvc
             services.AddMvc();
         }
@@ -29,11 +36,6 @@ namespace ToDoApp
                 app.UseDeveloperExceptionPage();
             }
 
-            //app.Run(async (context) =>
-            //{
-            //    await context.Response.WriteAsync("Hello World!");
-            //});
-
             app.UseMvc(routes =>
             {
                 //this is default routes convention based routing
@@ -45,14 +47,6 @@ namespace ToDoApp
                         controller = "Home",
                         action = "Index"
                     });
-
-                //more routing
-                routes.MapRoute(
-                name: "todo",
-                template: "convention/{action}/{id:int?}",
-                defaults: new { controller = "Todo", action = "Index" }
-                );
-
             });
 
         }
