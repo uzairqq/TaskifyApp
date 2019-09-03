@@ -1,9 +1,6 @@
-﻿
-@{
-    Layout = null;
-}
+﻿@model ToDoApp.Dtos.TodoDto
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
-<!DOCTYPE html>
 
 <html>
 <head>
@@ -12,5 +9,12 @@
 </head>
 <body>
     <h1>Todo Page</h1>
+    <form asp-action="Save" method="post">
+        <label asp-for="Name"></label>
+        <input type="text" asp-for="Name" />
+        <br />
+        <input type="submit" value="Save" />
+    </form>
+
 </body>
 </html>

@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using ToDoApp.Models;
 using Microsoft.Extensions.Configuration;
+using ToDoApp.DbServices;
 
 namespace ToDoApp
 {
@@ -23,6 +24,8 @@ namespace ToDoApp
         {
             services.AddDbContext<ApplicationDbContext>(options =>
                         options.UseSqlServer(Configuration.GetConnectionString("Development")));
+
+            DataAccessRegistry.RegisterRepository(services);
 
             // Add framework services. !!important to use mvc
             services.AddMvc();

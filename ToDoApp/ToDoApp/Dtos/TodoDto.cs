@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ToDoApp.Models
+namespace ToDoApp.Dtos
 {
-    public class Todo:BaseEntity
+    public class TodoDto
     {
         public string Name { get; set; }
     }
