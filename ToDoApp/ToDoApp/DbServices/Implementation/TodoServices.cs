@@ -32,7 +32,7 @@ namespace ToDoApp.DbServices.Implementation
                 return new ResponseMessageDto()
                 {
                     Success = true,
-                    SuccessMessage = nameof(StaticStrings.TodoSuccess),
+                    SuccessMessage = StaticStrings.TodoSuccess,
                     Failure = false,
                     FailureMessage = string.Empty
                 };
@@ -44,9 +44,28 @@ namespace ToDoApp.DbServices.Implementation
                     Success = false,
                     SuccessMessage = string.Empty,
                     Failure = true,
-                    FailureMessage = nameof(StaticStrings.TodoFailure)
+                    FailureMessage = StaticStrings.TodoFailure
                 };
                 throw ex;
+            }
+        }
+
+        public async Task<ResponseMessageDto> Update(TodoDto dto)
+        {
+            try
+            {
+                throw new Exception();
+            }
+            catch (Exception ex)
+            {
+                new ResponseMessageDto()
+                {
+                    Success = false,
+                    SuccessMessage = string.Empty,
+                    Failure = true,
+                    FailureMessage = StaticStrings.TodoFailure
+                };
+                throw;
             }
         }
     }

@@ -23,15 +23,20 @@ namespace ToDoApp.Controllers
         }
 
         [HttpPost("Save")]
-        public async Task<IActionResult> Save([FromBody] TodoDto dto)
+        public async Task<IActionResult> Save(TodoDto dto)
         {
             try
             {
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState);
 
-                var result =await _todoServices.Save(dto);
-                return Ok(result);
+                if (dto.Id == 0)
+                    await _todoServices.Save(dto);
+
+                else
+                    await _todoServices.Update(dto);
+                return Ok();
+                
             }
             catch (Exception ex)
             {

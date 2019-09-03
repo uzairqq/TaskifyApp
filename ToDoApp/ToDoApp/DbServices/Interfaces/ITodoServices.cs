@@ -9,5 +9,6 @@ namespace ToDoApp.DbServices.Interfaces
     public interface ITodoServices
     {
         Task<ResponseMessageDto> Save(TodoDto dto);
+        Task<ResponseMessageDto> Update(TodoDto dto);
     }
 }
