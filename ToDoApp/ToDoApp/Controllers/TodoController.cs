@@ -16,9 +16,11 @@ namespace ToDoApp.Controllers
             _todoServices = todoServices;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             var dto = new TodoDto();
+            var result = await _todoServices.Get();
+            dto.Todos = result;
             return View(dto);
         }
 
@@ -35,12 +37,27 @@ namespace ToDoApp.Controllers
 
                 else
                     await _todoServices.Update(dto);
-                return Ok();
+                return RedirectToAction("Index");
                 
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex);
                 throw ex;
+            }
+        }
+
+        public async Task<IActionResult> Get()
+        {
+            try
+            {
+                var result = await _todoServices.Get();
+                return View("Index", result);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                throw;
             }
         }
 

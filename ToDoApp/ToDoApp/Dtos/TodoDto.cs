@@ -9,5 +9,8 @@ namespace ToDoApp.Dtos
     public class TodoDto:BaseEntity
     {
         public string Name { get; set; }
+
+        public IEnumerable<TodoDto> Todos { get; set; }
+
     }
 }

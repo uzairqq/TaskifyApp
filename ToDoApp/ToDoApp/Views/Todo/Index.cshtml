@@ -6,6 +6,23 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Index</title>
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
 </head>
 <body>
     <h1>Todo Page</h1>
@@ -15,6 +32,27 @@
         <br />
         <button type="submit">Save</button>
     </form>
+    <table>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Active</th>
+            <th>Completed</th>
+            <th>Deleted</th>
+        </tr>
+        @foreach (var d in Model.Todos)
+        {
+            <tr>
+
+                <td>@d.Id</td>
+                <td>@d.Name</td>
+                <td>@d.CreatedOn</td>
+                <td>@d.CreatedById</td>
+                <td>@d.UpdatedById</td>
+            </tr>
+        }
+
+    </table>
 
 </body>
 </html>

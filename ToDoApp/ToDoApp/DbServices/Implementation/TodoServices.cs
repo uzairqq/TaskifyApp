@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -15,6 +16,30 @@ namespace ToDoApp.DbServices.Implementation
         public TodoServices(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
+        }
+
+        public async Task<IEnumerable<TodoDto>> Get()
+        {
+            try
+            {
+                var result = await _dbContext.Todos
+                    .AsNoTracking()
+                    .Select(i => new TodoDto
+                    {
+                        Id=i.Id,
+                        Name=i.Name,
+                        CreatedById=i.CreatedById,
+                        CreatedOn=i.CreatedOn,
+                        UpdatedById=i.UpdatedById,
+                        UpdatedOn=i.UpdatedOn
+                    }).ToListAsync();
+                return result;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                throw ex;
+            }
         }
 
         public async Task<ResponseMessageDto> Save(TodoDto dto)

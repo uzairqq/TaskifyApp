@@ -10,5 +10,7 @@ namespace ToDoApp.DbServices.Interfaces
     {
         Task<ResponseMessageDto> Save(TodoDto dto);
         Task<ResponseMessageDto> Update(TodoDto dto);
+        Task<IEnumerable<TodoDto>> Get();
+
     }
 }
