@@ -77,5 +77,24 @@ namespace ToDoApp.Controllers
         }
 
 
+        public async Task<IActionResult> Delete(int id)
+        {
+            try
+            {
+                var result = await _todoServices.Delete(id);
+                if (result.Success)
+                    return RedirectToAction("Index");
+                else
+                    return BadRequest();
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                throw;
+            }
+        }
+
+
     }
 }

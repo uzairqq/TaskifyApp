@@ -52,7 +52,7 @@
                     <td>@d.CreatedById</td>
                     <td>@d.UpdatedById</td>
                     <td><input asp-action="Edit" asp-route-id="@d.Id" type="submit" value="Edit" class="btn btn-info" /></td>
-                    <td><input type="button" value="Delete" /></td>
+                    <td><input asp-action="Delete" asp-route-id="@d.Id" type="submit" value="Delete"  /></td>
                 </tr>
             }
 

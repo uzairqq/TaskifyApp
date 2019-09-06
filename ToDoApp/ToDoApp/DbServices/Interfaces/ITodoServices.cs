@@ -13,6 +13,7 @@ namespace ToDoApp.DbServices.Interfaces
         Task<IEnumerable<TodoDto>> Get();
 
         Task<TodoDto> GetById(int id);
+        Task<ResponseMessageDto> Delete(int id);
 
 
 

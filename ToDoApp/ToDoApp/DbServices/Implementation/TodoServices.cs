@@ -18,6 +18,35 @@ namespace ToDoApp.DbServices.Implementation
             _dbContext = dbContext;
         }
 
+        public async Task<ResponseMessageDto> Delete(int id)
+        {
+            try
+            {
+                var resultInDb = await _dbContext.Todos.SingleAsync(i => i.Id == id);
+                _dbContext.Todos.Remove(resultInDb);
+                await _dbContext.SaveChangesAsync();
+                return new ResponseMessageDto()
+                {
+                    Id = id,
+                    Success = true,
+                    SuccessMessage = StaticStrings.TodoSuccessDeleted,
+                    Failure = false,
+                    FailureMessage = string.Empty
+                };
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return new ResponseMessageDto()
+                {
+                    Success = false,
+                    SuccessMessage = string.Empty,
+                    Failure = true,
+                    FailureMessage = StaticStrings.TodoFailure
+                };
+            }
+        }
+
         public async Task<IEnumerable<TodoDto>> Get()
         {
             try
@@ -26,12 +55,12 @@ namespace ToDoApp.DbServices.Implementation
                     .AsNoTracking()
                     .Select(i => new TodoDto
                     {
-                        Id=i.Id,
-                        Name=i.Name,
-                        CreatedById=i.CreatedById,
-                        CreatedOn=i.CreatedOn,
-                        UpdatedById=i.UpdatedById,
-                        UpdatedOn=i.UpdatedOn
+                        Id = i.Id,
+                        Name = i.Name,
+                        CreatedById = i.CreatedById,
+                        CreatedOn = i.CreatedOn,
+                        UpdatedById = i.UpdatedById,
+                        UpdatedOn = i.UpdatedOn
                     }).ToListAsync();
                 return result;
             }
@@ -53,7 +82,7 @@ namespace ToDoApp.DbServices.Implementation
                     Name = resultInDb.Name,
                 };
                 return todoDto;
-                
+
             }
             catch (Exception ex)
             {
@@ -107,7 +136,7 @@ namespace ToDoApp.DbServices.Implementation
                 await _dbContext.SaveChangesAsync();
                 return new ResponseMessageDto()
                 {
-                    Id=dto.Id,
+                    Id = dto.Id,
                     Success = true,
                     SuccessMessage = StaticStrings.TodoSuccess,
                     Failure = false,
