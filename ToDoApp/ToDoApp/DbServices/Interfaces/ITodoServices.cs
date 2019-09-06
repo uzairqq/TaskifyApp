@@ -12,5 +12,9 @@ namespace ToDoApp.DbServices.Interfaces
         Task<ResponseMessageDto> Update(TodoDto dto);
         Task<IEnumerable<TodoDto>> Get();
 
+        Task<TodoDto> GetById(int id);
+
+
+
     }
 }

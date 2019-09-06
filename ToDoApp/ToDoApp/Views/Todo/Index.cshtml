@@ -27,32 +27,36 @@
 <body>
     <h1>Todo Page</h1>
     <form asp-action="Save" method="post">
+        <input type="hidden" asp-for="Id" />
         <label asp-for="Name"></label>
         <input type="text" asp-for="Name" />
         <br />
         <button type="submit">Save</button>
     </form>
-    <table>
-        <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Active</th>
-            <th>Completed</th>
-            <th>Deleted</th>
-        </tr>
-        @foreach (var d in Model.Todos)
-        {
+    <form asp-action="">
+        <table>
             <tr>
-
-                <td>@d.Id</td>
-                <td>@d.Name</td>
-                <td>@d.CreatedOn</td>
-                <td>@d.CreatedById</td>
-                <td>@d.UpdatedById</td>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Active</th>
+                <th>Completed</th>
+                <th>Deleted</th>
             </tr>
-        }
+            @foreach (var d in Model.Todos)
+            {
+                <tr>
+                    <td>@d.Id</td>
+                    <td>@d.Name</td>
+                    <td>@d.CreatedOn</td>
+                    <td>@d.CreatedById</td>
+                    <td>@d.UpdatedById</td>
+                    <td><input asp-action="Edit" asp-route-id="@d.Id" type="submit" value="Edit" class="btn btn-info" /></td>
+                    <td><input type="button" value="Delete" /></td>
+                </tr>
+            }
 
-    </table>
+        </table>
+    </form>
 
 </body>
 </html>

@@ -42,6 +42,26 @@ namespace ToDoApp.DbServices.Implementation
             }
         }
 
+        public async Task<TodoDto> GetById(int id)
+        {
+            try
+            {
+                var resultInDb = await _dbContext.Todos.SingleAsync(i => i.Id == id);
+                var todoDto = new TodoDto()
+                {
+                    Id = resultInDb.Id,
+                    Name = resultInDb.Name,
+                };
+                return todoDto;
+                
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                throw;
+            }
+        }
+
         public async Task<ResponseMessageDto> Save(TodoDto dto)
         {
             try
@@ -79,7 +99,20 @@ namespace ToDoApp.DbServices.Implementation
         {
             try
             {
-                throw new Exception();
+                var todo = new Todo() { Id = dto.Id };
+                _dbContext.Todos.Attach(todo);
+                todo.Name = dto.Name;
+                todo.UpdatedById = 1;
+                todo.UpdatedOn = DateTime.UtcNow;
+                await _dbContext.SaveChangesAsync();
+                return new ResponseMessageDto()
+                {
+                    Id=dto.Id,
+                    Success = true,
+                    SuccessMessage = StaticStrings.TodoSuccess,
+                    Failure = false,
+                    FailureMessage = string.Empty
+                };
             }
             catch (Exception ex)
             {
@@ -90,7 +123,8 @@ namespace ToDoApp.DbServices.Implementation
                     Failure = true,
                     FailureMessage = StaticStrings.TodoFailure
                 };
-                throw;
+                Console.WriteLine(ex);
+                throw ex;
             }
         }
     }

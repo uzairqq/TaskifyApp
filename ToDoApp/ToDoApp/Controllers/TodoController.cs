@@ -32,9 +32,8 @@ namespace ToDoApp.Controllers
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState);
 
-                if (dto.Id == 0)
+              	if (dto.Id == 0)
                     await _todoServices.Save(dto);
-
                 else
                     await _todoServices.Update(dto);
                 return RedirectToAction("Index");
@@ -46,6 +45,22 @@ namespace ToDoApp.Controllers
                 throw ex;
             }
         }
+
+        public async Task<IActionResult> Edit(int id)
+        {
+            try
+            {
+                var resultInDb =await _todoServices.GetById(id);
+                resultInDb.Todos = await _todoServices.Get();
+                return View("Index", resultInDb);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                throw ex;
+            }
+        }
+
 
         public async Task<IActionResult> Get()
         {
