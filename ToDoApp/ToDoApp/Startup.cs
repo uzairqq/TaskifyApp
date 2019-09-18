@@ -22,10 +22,10 @@ namespace ToDoApp
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options =>
+            var connectionString= services.AddDbContext<ApplicationDbContext>(options =>
                         options.UseSqlServer(Configuration.GetConnectionString("Development")));
 
-            DataAccessRegistry.RegisterRepository(services);
+            DataAccessRegistry.RegisterRepository(connectionString);
 
             // Add framework services. !!important to use mvc
             services.AddMvc();
@@ -38,7 +38,9 @@ namespace ToDoApp
             {
                 app.UseDeveloperExceptionPage();
             }
-           
+            app.UseStaticFiles();
+
+
             app.UseMvc(routes =>
             {
                 //this is default routes convention based routing
