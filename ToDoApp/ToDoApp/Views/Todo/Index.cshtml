@@ -1,5 +1,8 @@
-﻿@model ToDoApp.Dtos.TodoDto
-@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model ToDoApp.Dtos.TodoDto
+
 
 
 <html>
@@ -52,7 +55,7 @@
                     <td>@d.CreatedById</td>
                     <td>@d.UpdatedById</td>
                     <td><input asp-action="Edit" asp-route-id="@d.Id" type="submit" value="Edit" class="btn btn-info" /></td>
-                    <td><input asp-action="Delete" asp-route-id="@d.Id" type="submit" value="Delete"  /></td>
+                    <td><input asp-action="Delete" asp-route-id="@d.Id" type="submit" value="Delete" /></td>
                 </tr>
             }
 

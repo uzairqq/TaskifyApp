@@ -49,7 +49,7 @@ namespace ToDoApp
                     template: "{controller}/{action}/{id:int?}",
                     defaults: new
                     {
-                        controller = "Home",
+                        controller = "Todo",
                         action = "Index"
                     });
             });
