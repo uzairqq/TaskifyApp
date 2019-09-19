@@ -21,6 +21,7 @@
     <Folder Include="wwwroot\" />
     <Folder Include="wwwroot\css\" />
     <Folder Include="wwwroot\js\" />
+    <Folder Include="Views\Login\" />
   </ItemGroup>
   <ItemGroup>
     <Content Remove="wwwroot\fonts\glyphicons-halflings-regular.woff2" />
