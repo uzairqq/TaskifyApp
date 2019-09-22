@@ -18,13 +18,14 @@
         <!-- Bootstrap core CSS -->
         <link href="~/css/bootstrap.min.css" rel="stylesheet">
 
-
+        <link href="~/all.css" rel="stylesheet">
         <!-- Custom styles for this template -->
-        <link rel="stylesheet" href="~/css/Style.css" />
+        <link  href="~/css/Style.css" rel="stylesheet" />
 
 
 
     </environment>
+    @RenderSection("styles", required: false)
 </head>
 
 <body>
@@ -43,10 +44,16 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
+    @*<script src="https://code.jquery.com/jquery-3.4.1.slim.js"
+        integrity="sha256-BTlTdQO9/fascB1drekrDVkaKd9PkwBymMlHOiG+qLI="
+        crossorigin="anonymous"></script>*@
+    @*<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>*@
 
-    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
     <script>window.jQuery || document.write('<script src="~/assets/js/vendor/jquery.min.js"><\/script>')</script>
-    <script src="~/js/bootstrap.min.js"></script>
+    <script src="~/jquery.slim.min.js"></script>
+    <script src="~/bootstrap.bundle.min.js"></script>
+
+    <script src="~/js/all.js"></script>
     @RenderSection("scripts", required: false)
 </body>
 </html>

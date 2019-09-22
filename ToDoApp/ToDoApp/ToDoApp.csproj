@@ -30,6 +30,15 @@
     <Content Remove="wwwroot\fonts\glyphicons-halflings-regular.woff" />
     <Content Remove="wwwroot\fonts\glyphicons-halflings-regular.svg" />
     <Content Remove="Views\Home\Index.cshtml" />
+    <Content Remove="wwwroot\css\bootstrap.css" />
+    <Content Remove="wwwroot\css\bootstrap.min.css" />
+    <Content Remove="wwwroot\css\bootstrap.min.css.map" />
+    <Content Remove="wwwroot\css\bootstrap-theme.css" />
+    <Content Remove="wwwroot\css\bootstrap-theme.css.map" />
+    <Content Remove="wwwroot\css\bootstrap-theme.min.css" />
+    <Content Remove="wwwroot\css\bootstrap-theme.min.css.map" />
+    <Content Remove="wwwroot\css\all.css" />
+    <Content Remove="wwwroot\css\bootstrap.min.css.map" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Controllers\HomeController.cs" />
