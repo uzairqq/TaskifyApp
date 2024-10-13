@@ -34,6 +34,28 @@ namespace TaskifyApp.Services
                 throw new ServiceException("Error In Getting All todo Items", ex);
             }
         }
+        public async Task<PagedResponse<TodoDto>> GetTodosAsync(PaginationFilter filter)
+        {
+            var todos = await _repository.GetTodosAsync(filter);
+            var totalCount = await _repository.GetTodoCountAsync();
+
+            // Manually map TodoItem to TodoDto
+            var todoDtos = todos.Select(todo => new TodoDto
+            {
+                Id = todo.Id,
+                Title = todo.Title,
+                Description = todo.Description,
+                IsCompleted = todo.IsCompleted
+            }).ToList();
+
+            return new PagedResponse<TodoDto>(
+                todoDtos,
+                filter.PageNumber,
+                filter.PageSize,
+                totalCount,
+                (int)Math.Ceiling((double)totalCount / filter.PageSize)
+            );
+        }
 
         public async Task<TodoDto> GetByIdAsync(int id)
         {

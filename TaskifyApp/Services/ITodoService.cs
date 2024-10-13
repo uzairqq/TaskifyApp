@@ -1,4 +1,5 @@
 ﻿using TaskifyApp.Dto;
+using TaskifyApp.Models;
 
 namespace TaskifyApp.Services
 {
@@ -9,5 +10,6 @@ namespace TaskifyApp.Services
         Task AddAsync(TodoDto todoDto);
         Task UpdateAsync(TodoDto todoDto);
         Task DeleteAsync(int id);
+        Task<PagedResponse<TodoDto>> GetTodosAsync(PaginationFilter filter);
     }
 }

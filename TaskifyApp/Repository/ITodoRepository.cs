@@ -9,5 +9,7 @@ namespace TaskifyApp.Repository
         Task AddAsync(TodoItem todo);
         Task UpdateAsync(TodoItem todo);
         Task DeleteAsync(int id);
+        Task<IEnumerable<TodoItem>> GetTodosAsync(PaginationFilter filter);
+        Task<int> GetTodoCountAsync();
     }
 }

@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Net;
 using TaskifyApp.Dto;
 using TaskifyApp.Models;
+using TaskifyApp.Repository;
 using TaskifyApp.Services;
 
 namespace TaskifyApp.Controllers
@@ -118,6 +120,13 @@ namespace TaskifyApp.Controllers
                     ErrorDetails = ex.StackTrace
                 });
             }
+        }
+
+        [HttpGet("Pagination")]
+        public async Task<IActionResult> Get([FromQuery] PaginationFilter filter)
+        {
+            var pagedResponse = await _todoService.GetTodosAsync(filter);
+            return Ok(pagedResponse);
         }
     }
 }

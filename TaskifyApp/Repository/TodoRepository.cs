@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using TaskifyApp.Dto;
 using TaskifyApp.Exceptions;
 using TaskifyApp.Models;
 
@@ -24,6 +25,30 @@ namespace TaskifyApp.Repository
                 throw new RepositoryException("Error In Getting All Todos From Database", ex);
             }
         }
+
+        public async Task<IEnumerable<TodoItem>> GetTodosAsync(PaginationFilter filter)
+        {
+            var query = _context.TodoItems.AsQueryable();
+
+            if (!string.IsNullOrEmpty(filter.Title))
+            {
+                query = query.Where(t => t.Title.Contains(filter.Title));
+            }
+
+            if (!string.IsNullOrEmpty(filter.Description))
+            {
+                query = query.Where(t => t.Description.Contains(filter.Description));
+            }
+            query = query.Skip((filter.PageNumber - 1) * filter.PageSize).Take(filter.PageSize);
+
+            return await query.ToListAsync();
+        }
+
+        public async Task<int> GetTodoCountAsync()
+        {
+            return await _context.TodoItems.CountAsync();
+        }
+
 
         public async Task<TodoItem> GetByIdAsync(long id)
         {
