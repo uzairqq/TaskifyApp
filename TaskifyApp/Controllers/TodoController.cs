@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 using TaskifyApp.Dto;
+using TaskifyApp.Models;
 using TaskifyApp.Services;
 
 namespace TaskifyApp.Controllers
@@ -19,40 +21,103 @@ namespace TaskifyApp.Controllers
         [HttpGet]
         public async Task<ActionResult<List<TodoDto>>> GetAllAsync()
         {
-            var todos = await _todoService.GetAllAsync();
-            return Ok(todos);
+            try
+            {
+                var todos = await _todoService.GetAllAsync();
+                return Ok(todos);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, new ErrorResponse
+                {
+                    Message = ex.Message,
+                    StatusCode = ((int)HttpStatusCode.InternalServerError).ToString(),
+                    ErrorDetails = ex.StackTrace
+                });
+            }
+
         }
 
         [HttpGet("{id}", Name = "GetTodo")]
         public async Task<ActionResult<TodoDto>> GetByIdAsync(int id)
         {
-            var todo = await _todoService.GetByIdAsync(id);
-            if (todo == null)
+            try
             {
-                return NotFound();
+                var todo = await _todoService.GetByIdAsync(id);
+                if (todo == null)
+                {
+                    return NotFound();
+                }
+                return Ok(todo);
             }
-            return Ok(todo);
+            catch (Exception ex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, new ErrorResponse
+                {
+                    Message = ex.Message,
+                    StatusCode = ((int)HttpStatusCode.InternalServerError).ToString(),
+                    ErrorDetails = ex.StackTrace
+                });
+            }
+
         }
 
         [HttpPost]
         public async Task<ActionResult<TodoDto>> AddAsync(TodoDto todoDto)
         {
-            await _todoService.AddAsync(todoDto);
-            return CreatedAtRoute("GetTodo", new { controller = "Todo", id = todoDto.Id }, todoDto);
+            try
+            {
+                await _todoService.AddAsync(todoDto);
+                return CreatedAtRoute("GetTodo", new { controller = "Todo", id = todoDto.Id }, todoDto);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, new ErrorResponse
+                {
+                    Message = ex.Message,
+                    StatusCode = ((int)HttpStatusCode.InternalServerError).ToString(),
+                    ErrorDetails = ex.StackTrace
+                });
+            }
         }
 
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateAsync(int id, TodoDto todoDto)
         {
-            await _todoService.UpdateAsync(todoDto);
-            return NoContent();
+            try
+            {
+                await _todoService.UpdateAsync(todoDto);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, new ErrorResponse
+                {
+                    Message = ex.Message,
+                    StatusCode = ((int)HttpStatusCode.InternalServerError).ToString(),
+                    ErrorDetails = ex.StackTrace
+                });
+            }
+
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteAsync(int id)
         {
-            await _todoService.DeleteAsync(id);
-            return NoContent();
+            try
+            {
+                await _todoService.DeleteAsync(id);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, new ErrorResponse
+                {
+                    Message = ex.Message,
+                    StatusCode = ((int)HttpStatusCode.InternalServerError).ToString(),
+                    ErrorDetails = ex.StackTrace
+                });
+            }
         }
     }
 }
