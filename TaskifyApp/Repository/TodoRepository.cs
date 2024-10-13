@@ -39,6 +39,16 @@ namespace TaskifyApp.Repository
             {
                 query = query.Where(t => t.Description.Contains(filter.Description));
             }
+
+            if (filter.IsCompleted.HasValue)
+            {
+                query = query.Where(t => t.IsCompleted == filter.IsCompleted.Value);
+            }
+
+            if (filter.DueDate.HasValue)
+            {
+                query = query.Where(t => t.DueDate == filter.DueDate.Value);
+            }
             query = query.Skip((filter.PageNumber - 1) * filter.PageSize).Take(filter.PageSize);
 
             return await query.ToListAsync();
