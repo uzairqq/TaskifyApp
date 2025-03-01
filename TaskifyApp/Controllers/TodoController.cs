@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Net;
@@ -11,6 +12,7 @@ namespace TaskifyApp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class TodoController : ControllerBase
     {
         private readonly ITodoService _todoService;
@@ -39,7 +41,6 @@ namespace TaskifyApp.Controllers
             }
 
         }
-
         [HttpGet("{id}", Name = "GetTodo")]
         public async Task<ActionResult<TodoDto>> GetByIdAsync(int id)
         {
@@ -63,7 +64,6 @@ namespace TaskifyApp.Controllers
             }
 
         }
-
         [HttpPost]
         public async Task<ActionResult<TodoDto>> AddAsync(TodoDto todoDto)
         {
@@ -82,7 +82,6 @@ namespace TaskifyApp.Controllers
                 });
             }
         }
-
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateAsync(int id, TodoDto todoDto)
         {
@@ -102,7 +101,6 @@ namespace TaskifyApp.Controllers
             }
 
         }
-
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteAsync(int id)
         {
@@ -121,7 +119,6 @@ namespace TaskifyApp.Controllers
                 });
             }
         }
-
         [HttpGet("Pagination")]
         public async Task<IActionResult> Get([FromQuery] PaginationFilter filter)
         {
