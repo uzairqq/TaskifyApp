@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.13.35825.156 d17.13
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication1", "WebApplication1\WebApplication1.csproj", "{80C5E800-AD85-40C5-BCD4-8C5EA766C726}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskifyAPI", "WebApplication1\TaskifyAPI.csproj", "{80C5E800-AD85-40C5-BCD4-8C5EA766C726}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

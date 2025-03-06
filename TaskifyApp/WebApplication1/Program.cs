@@ -1,6 +1,16 @@
+using TaskifyAPI.Models;
+
+using Microsoft.OpenApi.Models;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+builder.Services.AddDbContext<TaskifyDbContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("TaskifyDbContext"));
+});
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -13,7 +23,7 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "TaskifyAPI v1"));
 }
 
 app.UseHttpsRedirection();
