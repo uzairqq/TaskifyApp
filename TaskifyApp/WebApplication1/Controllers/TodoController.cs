@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TaskifyAPI.Models;
 using System.Linq;
+using TaskifyAPI.Services.Interface;
+using TaskifyAPI.Dtos;
 
 namespace TaskifyAPI.Controllers
 {
@@ -8,81 +10,50 @@ namespace TaskifyAPI.Controllers
     [ApiController]
     public class TodoController : ControllerBase
     {
-        private readonly TaskifyDbContext _context;
+        private readonly ITodoServices _todoServices;
 
-        public TodoController(TaskifyDbContext context)
+        public TodoController(ITodoServices todoServices)
         {
-            _context = context;
+            _todoServices = todoServices;
         }
 
         // Get all todos
         [HttpGet]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAllTodos()
         {
-            var todos = _context.Todos.ToList();
-            return Ok(todos);
+            var tasks = await _todoServices.GetAllTodos();
+            return Ok(tasks);
         }
 
         // Get a single todo by ID
         [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        public async Task<IActionResult> GetTodoById(int id)
         {
-            var entity = _context.Todos.Find(id);
-            if (entity == null)
-            {
-                return NotFound();
-            }
-            return Ok(entity);
+            var task = await _todoServices.GetTodoById(id);
+            if (task == null) return NotFound();
+            return Ok(task);
         }
 
         // Create a new todo
         [HttpPost]
-        public IActionResult Post([FromBody] Todo todo)
+        public async Task<IActionResult> AddTodo([FromBody] TodoDto todoDto)
         {
-            if (todo == null)
-            {
-                return BadRequest("Todo cannot be null");
-            }
-
-            _context.Todos.Add(todo);
-            _context.SaveChanges();
-            return CreatedAtAction(nameof(Get), new { id = todo.Id }, todo);
+            await _todoServices.AddTodo(todoDto);
+            return CreatedAtAction(nameof(GetTodoById), new { id = todoDto.Id }, todoDto);
         }
-
+        // Update a todo
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] Todo todo)
+        public async Task<IActionResult> UpdateTodo(int id, [FromBody] TodoDto todoDto)
         {
-            var entity = _context.Todos.Find(id);
-            if (entity == null)
-            {
-                return NotFound();
-            }
-
-            entity.Title = todo.Title;
-            entity.DueDate = todo.DueDate;
-            entity.IsCompleted = todo.IsCompleted;
-            entity.Description = todo.Description;
-            entity.Status = todo.Status;
-            entity.IsUpdated = todo.IsUpdated;
-            entity.IsDeleted = todo.IsDeleted;
-            entity.UserId = todo.UserId;
-
-            _context.SaveChanges();
-            return Ok(entity);
+            await _todoServices.UpdateTodo(id, todoDto);
+            return NoContent();
         }
 
         // Delete a todo
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> DeleteTodo(int id)
         {
-            var entity = _context.Todos.Find(id);
-            if (entity == null)
-            {
-                return NotFound();
-            }
-
-            _context.Todos.Remove(entity);
-            _context.SaveChanges();
+            await _todoServices.DeleteTodo(id);
             return NoContent();
         }
     }

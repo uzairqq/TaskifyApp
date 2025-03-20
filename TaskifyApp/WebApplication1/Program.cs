@@ -2,6 +2,10 @@ using TaskifyAPI.Models;
 
 using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
+using TaskifyAPI.Services.Implementation;
+using TaskifyAPI.Services.Interface;
+using TaskifyAPI.Repositories.Interface;
+using TaskifyAPI.Repositories.Implementation;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +15,9 @@ builder.Services.AddDbContext<TaskifyDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("TaskifyDbContext"));
 });
+
+builder.Services.AddScoped<ITodoServices, TodoService>();
+builder.Services.AddScoped<ITodoRepository, TodoRepository>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
