@@ -38,6 +38,10 @@ namespace TaskifyAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> AddTodo([FromBody] TodoDto todoDto)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             await _todoServices.AddTodo(todoDto);
             return CreatedAtAction(nameof(GetTodoById), new { id = todoDto.Id }, todoDto);
         }
@@ -45,6 +49,10 @@ namespace TaskifyAPI.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateTodo(int id, [FromBody] TodoDto todoDto)
         {
+             if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             await _todoServices.UpdateTodo(id, todoDto);
             return NoContent();
         }
