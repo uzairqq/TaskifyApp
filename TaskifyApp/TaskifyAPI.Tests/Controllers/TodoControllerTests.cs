@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Moq;
 using System;
 using System.Collections.Generic;
@@ -17,11 +18,15 @@ namespace TaskifyAPI.Tests.Controllers
     {
         private readonly TodoController _controller;
         private readonly Mock<ITodoServices> _todoServiceMock;
+        private readonly Mock<ILogger<TodoController>> _loggerMock;
+
 
         public TodoControllerTests()
         {
             _todoServiceMock = new Mock<ITodoServices>();
-            _controller = new TodoController(_todoServiceMock.Object);
+            _loggerMock = new Mock<ILogger<TodoController>>();
+
+            _controller = new TodoController(_todoServiceMock.Object, _loggerMock.Object);
         }
 
         [Fact]
@@ -98,7 +103,7 @@ namespace TaskifyAPI.Tests.Controllers
 
             // Act
             var result = await _controller.UpdateTodo(1, updatedTodo);
-
+                
             // Assert
             result.Should().BeOfType<NoContentResult>();
         }
