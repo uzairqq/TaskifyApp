@@ -24,6 +24,7 @@ namespace TaskifyAPI.Controllers
             var tasks = await _taskService.GetAllAsync();
             return Ok(tasks);
         }
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
@@ -31,6 +32,7 @@ namespace TaskifyAPI.Controllers
             if (task == null) return NotFound();
             return Ok(task);
         }
+
         [HttpPost]
         public async Task<IActionResult> Create(TaskItem taskItem)
         {

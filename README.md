@@ -68,15 +68,12 @@ cd TaskifyAPI
 
 Visit: https://localhost:5001/swagger
 
-🧠 Future Plans:-
+## 🧠 Future Plans
 
-⛓️ Switch from InMemory to SQL Server
-
-🌐 Deploy to Render / Railway (free)
-
-🧪 Add Unit Tests (XUnit/NUnit)
-
-🌱 Add User Auth (JWT) and Frontend (React)
+- ⛓️ Switch from InMemory to SQL Server
+- 🌐 Deploy to Render / Railway (free)
+- 🧪 Add Unit Tests (XUnit/NUnit)
+- 🌱 Add User Auth (JWT) and Frontend (React)
 
 🤝 Author
 Uzair Iqbal
