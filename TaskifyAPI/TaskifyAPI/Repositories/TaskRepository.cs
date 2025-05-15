@@ -41,10 +41,10 @@ namespace TaskifyAPI.Repositories
 
         public async Task<TaskItem?> UpdateAsync(TaskItem taskItem)
         {
-            var existingTaskItem = _context.TaskItems.Find(taskItem);
+            var existingTaskItem = _context.TaskItems.Find(taskItem.Id);
             if (existingTaskItem == null) return null;
 
-            existingTaskItem.Name = taskItem.Name;
+            existingTaskItem.Title = taskItem.Title;
             existingTaskItem.Description = taskItem.Description;
             existingTaskItem.IsCompleted = taskItem.IsCompleted;
 
