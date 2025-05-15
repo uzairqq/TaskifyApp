@@ -7,10 +7,10 @@ A simple yet powerful Task Management Web API built with ASP.NET Core 8.0 using 
 ## 🚀 Features
 
 - ✅ RESTful API (CRUD operations)
-- 🔄 In-Memory Database using EF Core
-- 📦 Repository + Service Pattern (clean layered structure)
-- 📚 Fully tested via Swagger
-- 💡 Ready to migrate to SQL Server & deploy to cloud
+- 💾 SQL Server database with Entity Framework Core
+- 🔄 Clean Repository + Service Pattern
+- 🧠 Async/Await based async programming
+- 📚 Swagger UI for testing
 
 ---
 
@@ -70,10 +70,10 @@ Visit: https://localhost:5001/swagger
 
 ## 🧠 Future Plans
 
-- ⛓️ Switch from InMemory to SQL Server
 - 🌐 Deploy to Render / Railway (free)
 - 🧪 Add Unit Tests (XUnit/NUnit)
-- 🌱 Add User Auth (JWT) and Frontend (React)
+- 🔐 Add JWT-based Authentication
+- 🌱 Build Frontend using React
 
 🤝 Author
 Uzair Iqbal
