@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using TaskifyAPI.Dto;
 using TaskifyAPI.Models;
 using TaskifyAPI.Services;
 
@@ -34,19 +35,16 @@ namespace TaskifyAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(TaskItem taskItem)
+        public async Task<IActionResult> Create(TaskUpsertDto dto)
         {
-            var createdTask = await _taskService.AddAsync(taskItem);
-            return CreatedAtAction(nameof(GetById), new { id = createdTask.Id }, createdTask);
+            var created = await _taskService.AddAsync(dto);
+            return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateAsync(int id, TaskItem taskItem)
+        public async Task<IActionResult> UpdateAsync(int id, TaskUpsertDto dto)
         {
-            if (id != taskItem.Id)
-                return BadRequest();
-
-            var updated = await _taskService.UpdateAsync(taskItem);
+            var updated = await _taskService.UpdateAsync(id, dto);
             if (updated == null)
                 return NotFound();
 
