@@ -37,6 +37,9 @@ namespace TaskifyAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(TaskUpsertDto dto)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             var created = await _taskService.AddAsync(dto);
             return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
         }
@@ -44,6 +47,9 @@ namespace TaskifyAPI.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateAsync(int id, TaskUpsertDto dto)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             var updated = await _taskService.UpdateAsync(id, dto);
             if (updated == null)
                 return NotFound();

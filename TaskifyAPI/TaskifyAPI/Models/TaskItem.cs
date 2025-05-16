@@ -1,4 +1,6 @@
-﻿namespace TaskifyAPI.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace TaskifyAPI.Models
 {
     public class TaskItem
     {
