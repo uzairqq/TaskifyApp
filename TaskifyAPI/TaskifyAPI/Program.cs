@@ -4,6 +4,7 @@ using TaskifyAPI.Repositories;
 using TaskifyAPI.Services;
 using Microsoft.EntityFrameworkCore;
 using TaskifyAPI.Data;
+using Microsoft.AspNetCore.Diagnostics;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,11 +29,24 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.UseExceptionHandler("/error");
 }
 
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+app.Map("/error", (HttpContext httpContext) =>
+{
+    var exceptionHandlerPathFeature = httpContext.Features.Get<IExceptionHandlerPathFeature>();
+    var error = exceptionHandlerPathFeature?.Error;
+
+    return Results.Problem(
+        title: "An unexpected error occurred.",
+        detail: error?.Message,
+        statusCode: 500
+    );
+});
 
 app.MapControllers();
 
