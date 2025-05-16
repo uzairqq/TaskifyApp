@@ -6,21 +6,27 @@ A simple yet powerful Task Management Web API built with ASP.NET Core 8.0 using 
 
 ## 🚀 Features
 
-- ✅ RESTful API (CRUD operations)
-- 💾 SQL Server database with Entity Framework Core
-- 🔄 Clean Repository + Service Pattern
-- 🧠 Async/Await based async programming
-- 📚 Swagger UI for testing
+- ✅ RESTful API with full CRUD
+- 🔄 DTO-based architecture (Create, Update, Read)
+- 🧠 Mapping handled in Service layer for clean controllers
+- 💾 SQL Server database using Entity Framework Core 8
+- 🧪 Swagger UI for testing endpoints
+- ✅ Model validation using Data Annotations + ModelState
 
 ---
 
 ## 🧱 Tech Stack
 
-- ASP.NET Core 8.0 Web API
-- Entity Framework Core (In-Memory DB)
-- Swagger / Swashbuckle for testing
-- C#, LINQ, Async/Await
-- Git + GitHub for version control
+- **.NET 8.0** — Framework for building Web APIs
+- **C#** — Primary programming language
+- **ASP.NET Core Web API** — Backend RESTful services
+- **Entity Framework Core 8** — ORM for SQL Server
+- **SQL Server** — Real production-grade database
+- **DTOs** — Used for clean data transfer and validation
+- **Swagger (Swashbuckle)** — API documentation & testing
+- **Dependency Injection** — For service and repository registration
+- **LINQ + Async/Await** — Modern data querying and performance
+- **Model Validation (DataAnnotations)** — Input validation and error handling
 
 ---
 
@@ -28,39 +34,30 @@ A simple yet powerful Task Management Web API built with ASP.NET Core 8.0 using 
 
 TaskifyAPI/
 │
-├── Models/
-│ └── TaskItem.cs
-├── Data/
-│ └── ApplicationDbContext.cs
-├── Repositories/
-│ ├── ITaskRepository.cs
-│ └── TaskRepository.cs
-├── Services/
-│ ├── ITaskService.cs
-│ └── TaskService.cs
-├── Controllers/
-│ └── TaskController.cs
-└── Program.cs
+├── Models/ → Entity classes (e.g., TaskItem)
+├── DTOs/ → Clean data transfer classes (e.g., TaskUpsertDto, TaskReadDto)
+├── Data/ → EF Core DbContext (ApplicationDbContext)
+├── Repositories/ → ITaskRepository + TaskRepository (Data access layer)
+├── Services/ → ITaskService + TaskService (Business logic + DTO mapping)
+├── Controllers/ → TaskController (lean controller, no mapping)
+├── Migrations/ → EF Core migration history (SQL schema)
+└── Program.cs → Dependency Injection + EF + Routing setup
 
 ---
 
-## 🧪 API Endpoints
+## 📐 Design Decisions
 
-| Method | Endpoint       | Description          |
-| ------ | -------------- | -------------------- |
-| GET    | /api/Task      | Get all tasks        |
-| GET    | /api/Task/{id} | Get task by ID       |
-| POST   | /api/Task      | Create new task      |
-| PUT    | /api/Task/{id} | Update existing task |
-| DELETE | /api/Task/{id} | Delete task by ID    |
-
----
+- Followed Clean Architecture principles
+- Used DTOs for separation of concerns and security
+- Moved all entity-DTO mapping to Service layer (Controller is lean)
+- Centralized validation at DTO level using Data Annotations
+- Async Task-based methods for scalability
 
 ## ▶️ Getting Started
 
 ### 1. Clone the Repo
 
-git clone https://github.com/your-username/TaskifyAPI.git
+git clone https://github.com/uzairqq/Todo-App
 cd TaskifyAPI
 
 2. Run the Project
