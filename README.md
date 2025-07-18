@@ -25,3 +25,17 @@ dotnet ef migrations add InitialCreate
 dotnet ef database update
 
 ✅ Commit: `Step 2: Added TaskItem model, EF Core, AppDbContext, migration`
+
+
+## ✅ Step 3: TasksController with CRUD
+
+- Created `TasksController.cs` in `Controllers/`
+- Added routes:
+  - `GET /api/tasks`
+  - `GET /api/tasks/{id}`
+  - `POST /api/tasks`
+  - `PUT /api/tasks/{id}`
+  - `DELETE /api/tasks/{id}`
+- Tested using Swagger
+
+✅ Commit: `Step 3: Added TasksController with full CRUD operations`
