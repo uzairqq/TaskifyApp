@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 using TaskifyApi.Data;
+using TaskifyApi.Dto;
 using TaskifyApi.Models;
 
 namespace TaskifyApi.Controllers
@@ -36,8 +37,18 @@ namespace TaskifyApi.Controllers
 
         //Post: api/tasks
         [HttpPost]
-        public async Task<ActionResult<TaskItem>> CreateTask(TaskItem task)
+        public async Task<ActionResult<TaskItem>> CreateTask(CreateTaskDto taskDto)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var task = new TaskItem
+            {
+                Title = taskDto.Title,
+                IsCompleted = false
+            };
+
+
             _context.TaskItems.Add(task);
             await _context.SaveChangesAsync();
             return CreatedAtAction(nameof(GetTask), new { id = task.Id }, task);
@@ -45,24 +56,24 @@ namespace TaskifyApi.Controllers
 
         //Put: api/tasks/5
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateTask(int id,TaskItem taskItem)
+        public async Task<ActionResult> UpdateTask(int id,UpdateTaskDto taskDto)
         {
-            if (id != taskItem.Id) return BadRequest();
 
-            _context.Entry(taskItem).State = EntityState.Modified;
+            if (id != taskDto.Id)
+                return BadRequest("ID mismatch");
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!_context.TaskItems.Any(e => e.Id == id))
-                    return NotFound();
-                else
-                    throw;
-            }
 
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var task = await _context.TaskItems.FindAsync(id);
+            if (task == null)
+                return NotFound();
+
+            task.Title = taskDto.Title;
+            task.IsCompleted = taskDto.IsCompleted;
+
+            await _context.SaveChangesAsync();
             return NoContent();
         }
 
