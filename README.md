@@ -39,3 +39,14 @@ dotnet ef database update
 - Tested using Swagger
 
 ✅ Commit: `Step 3: Added TasksController with full CRUD operations`
+
+
+
+## ✅ Step 4: DTOs and Validation
+
+- Created `CreateTaskDto` and `UpdateTaskDto` with validation attributes
+- Used DTOs in controller instead of model
+- Added model validation using `[Required]`, `[MinLength]`
+- Prevented direct access to internal entity models
+
+✅ Commit: `Step 4: Added DTOs and model validation in POST and PUT`
