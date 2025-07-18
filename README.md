@@ -6,3 +6,22 @@
 - Swagger is working
 
 ### 🔗 Commands used:
+dotnet new webapi -n TaskifyAPI
+dotnet run
+
+✅ Commit Message: `Initial commit - Created .NET 8 Web API project`
+
+
+## ✅ Step 2: EF Core + Model Setup
+
+- Added TaskItem model in `Models/`
+- Installed EF Core + SQLite
+- Created AppDbContext and registered it
+- Applied EF migration and created SQLite DB
+
+### 🔗 Commands used:
+dotnet add package Microsoft.EntityFrameworkCore.Sqlite
+dotnet ef migrations add InitialCreate
+dotnet ef database update
+
+✅ Commit: `Step 2: Added TaskItem model, EF Core, AppDbContext, migration`
