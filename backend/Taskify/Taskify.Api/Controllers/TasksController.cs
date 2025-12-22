@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Mvc;
-using System.ComponentModel;
+﻿using Microsoft.AspNetCore.Mvc;
 using Taskify.Api.Models;
 
 namespace Taskify.Api.Controllers
@@ -68,6 +65,16 @@ namespace Taskify.Api.Controllers
             return Ok(findTask);
         }
 
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            if (id <= 0) return BadRequest();
+            
+            var findTask = taskItems.Find(i => i.Id == id);
+            if (findTask == null) return NotFound();
 
+            taskItems.Remove(findTask);
+            return NoContent();
+        }
     }
 }
