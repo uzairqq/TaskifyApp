@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel;
 using Taskify.Api.Models;
@@ -39,6 +40,27 @@ namespace Taskify.Api.Controllers
             taskItems.Add(task);
             return Ok(task);
         }
+
+        [HttpGet("{id}")]
+        public IActionResult GetById(int id)
+        {
+            if (id == 0)
+                return BadRequest();
+
+            if (taskItems.Count == 0) return NotFound();
+
+            var result = taskItems
+                .Where(i => i.Id == id)
+                .Select(i => new TaskItem()
+                {
+                    Id = i.Id,
+                    Title = i.Title,
+                    Status = i.Status,
+                }).SingleOrDefault();
+
+            return result == null ? NotFound() : Ok(result);
+        }
+
 
     }
 }
