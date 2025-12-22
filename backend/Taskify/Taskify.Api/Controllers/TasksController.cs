@@ -16,7 +16,7 @@ namespace Taskify.Api.Controllers
             {
                 Id=1,
                 Title="Wash Car",
-                Status=false
+                Status=Models.TaskStatus.Todo
 
             }
         };
@@ -29,36 +29,43 @@ namespace Taskify.Api.Controllers
         public IActionResult Post(TaskItem taskItem)
         {
             var newId = (taskItems.Count == 0) ? 1 : taskItems.Max(x => x.Id) + 1;
-
             var task = new TaskItem
             {
                 Id = newId,
                 Title = taskItem.Title,
-                Status = taskItem.Status
-
+                Status = Models.TaskStatus.Todo
             };
             taskItems.Add(task);
-            return Ok(task);
+            return CreatedAtAction(nameof(GetById), new { id = task.Id }, task);
         }
 
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
-            if (id == 0)
+            if (id <= 0)
                 return BadRequest();
 
             if (taskItems.Count == 0) return NotFound();
 
             var result = taskItems
-                .Where(i => i.Id == id)
-                .Select(i => new TaskItem()
-                {
-                    Id = i.Id,
-                    Title = i.Title,
-                    Status = i.Status,
-                }).SingleOrDefault();
+                .Where(i => i.Id == id).FirstOrDefault();
+                
 
             return result == null ? NotFound() : Ok(result);
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult Put(int id,TaskItem taskItem)
+        {
+            if (id <= 0) return BadRequest();
+
+            var findTask = taskItems.Find(i => i.Id == id);
+            if (findTask == null) return NotFound();
+
+            findTask.Title = taskItem.Title;
+            findTask.Status = taskItem.Status;
+
+            return Ok(findTask);
         }
 
 
